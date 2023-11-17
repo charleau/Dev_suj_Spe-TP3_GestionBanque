@@ -32,24 +32,26 @@ namespace GestionBanque.Tests
 
         [Fact]
         [AvantApresDataService(CheminBd)]
-        public void Update_ShouldBeTrue()
+        public void Update_ShouldBeEqual()
         {
             CompteSqliteDataService ds = new CompteSqliteDataService(CheminBd);
 
             Compte cmptTest = new Compte(1, "9864", 123.45, 1);
 
-            Assert.True(ds.Update(cmptTest));
+            ds.Update(cmptTest);
+
+            Assert.Equal(cmptTest, ds.Get(1));
         }
 
         [Fact]
         [AvantApresDataService(CheminBd)]
-        public void Update_ShouldBeValid()
+        public void Update_ShouldBenotvalid()
         {
             CompteSqliteDataService ds = new CompteSqliteDataService(CheminBd);
 
-            Compte cmptTest = new Compte(1, "9864", 123.45, 1);
+            Compte cmptTest = new Compte(1, "9864", -123.45, 1);
 
-            Assert.True(ds.Update(cmptTest));
+            Assert.NotEqual(cmptTest, ds.Get(1));
         }
     }
 }
