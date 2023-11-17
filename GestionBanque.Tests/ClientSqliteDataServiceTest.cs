@@ -14,6 +14,11 @@ namespace GestionBanque.Tests
     [Collection("Dataservice")]
     public class ClientSqliteDataServiceTest
     {
+        //À tester
+        //GetAll()
+        //RecuperComptes()
+        //Update()
+
         private const string CheminBd = "test.bd";
 
         [Fact]
@@ -31,6 +36,24 @@ namespace GestionBanque.Tests
 
             // Affirmation
             Assert.Equal(clientAttendu, clientActuel);
+        }
+
+        [Fact]
+        [AvantApresDataService(CheminBd)]
+        public void GetAllTest_ShouldBeValid()
+        {
+            ClientSqliteDataService ds = new ClientSqliteDataService(CheminBd);
+            IEnumerable<Client> list = ds.GetAll();
+            IEnumerable<Client> iEnumAttendue = new List<Client>();
+            List<Client> listAttendue = new List<Client>();
+
+            foreach (Client elem in list){
+                listAttendue.Add(ds.Get(elem.Id));
+            }
+
+            iEnumAttendue = listAttendue;
+
+            Assert.Equal(list, iEnumAttendue);
         }
     }
 }
