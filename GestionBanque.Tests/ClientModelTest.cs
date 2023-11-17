@@ -63,6 +63,7 @@ namespace GestionBanque.Tests
         [InlineData("saliou@senegal")]
         [InlineData("")]
         [InlineData("saliou.com")]
+        [InlineData("saliou")]
         public void TestSetterCourriel_ShouldThrowExcepetion(string testEmail)
         {
             Client client = new Client(1, "Ndong", "Saliou", "saliou@ndong.com");

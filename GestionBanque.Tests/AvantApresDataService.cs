@@ -25,13 +25,13 @@ namespace GestionBanque.Tests
         public override void Before(MethodInfo methodUnderTest)
         {
             Debug.WriteLine("Avant le test " + methodUnderTest);
-            //SupprimerBd();
+            SupprimerBd();
         }
 
         public override void After(MethodInfo methodUnderTest)
         {
             Debug.WriteLine("Après le test " + methodUnderTest);
-            //SupprimerBd();
+            SupprimerBd();
         }
 
         private void SupprimerBd()
