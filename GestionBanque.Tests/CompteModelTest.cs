@@ -9,8 +9,12 @@ namespace GestionBanque.Tests
 {
     public class CompteModelTest
     {
-        [Fact]
 
+/**************************************************************************************************
+                                                                                            Déposer
+**************************************************************************************************/
+
+        [Fact]  // Should be equal
         public void TestDeposer_ShouldBeEqual()
         {
             double montantDepot = 45.50;
@@ -23,7 +27,7 @@ namespace GestionBanque.Tests
             Assert.Equal(montantAttendu, compte.Balance);
         }
 
-        [Fact]
+        [Fact]  // out of range --> Throw exception
         public void TestDeposer_ShouldThrowException()
         {
             double montantDepot = -45.43;
@@ -33,7 +37,13 @@ namespace GestionBanque.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => compte.Deposer(montantDepot));
         }
 
-        [Fact]
+
+/**************************************************************************************************
+                                                                                            Retirer
+**************************************************************************************************/
+
+
+        [Fact]  // Should be equal
         public void TestRetirer_ShouldBeEqual()
         {
             double montantRetrait = 45.43;
@@ -46,12 +56,23 @@ namespace GestionBanque.Tests
             Assert.Equal(montantAttendu, compte.Balance);
         }
 
-        [Fact]
+        [Fact]  // out of range --> Throw exception
         public void TestRetirer_ShouldThrowException()
         {
             double montantRetrait = 45.43;
 
             Compte compte = new Compte(1, "cmpt1", 0.00, 2);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => compte.Retirer(montantRetrait));
+        }
+
+
+        [Fact]  // out of range --> Throw exception
+        public void TestRetirer_ShouldThrowException2()
+        {
+            double montantRetrait = -45.43;
+
+            Compte compte = new Compte(1, "cmpt1", 100.35, 2);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => compte.Retirer(montantRetrait));
         }

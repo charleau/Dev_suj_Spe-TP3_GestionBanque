@@ -8,7 +8,7 @@ namespace GestionBanque.Models
 {
     public class Client : INotifyPropertyChanged
     {
-        private static string pattern = @"^([\w\.\-]+)@?([\w\-]+)((\.(\w){2,3})+)$";
+        private static string pattern = @"^([\w\.\-]+)@{1}([\w\-]+)((\.(\w){2,3})+)$"; // Erreur ICI ! Le @ n'était pas obligatoire !
         private static Regex regexCourriel = new Regex(pattern);
 
         private long _id;

@@ -29,5 +29,27 @@ namespace GestionBanque.Tests
             // Affirmation
             Assert.Equal(compteAttendu, compteActuel);
         }
+
+        [Fact]
+        [AvantApresDataService(CheminBd)]
+        public void Update_ShouldBeTrue()
+        {
+            CompteSqliteDataService ds = new CompteSqliteDataService(CheminBd);
+
+            Compte cmptTest = new Compte(1, "9864", 123.45, 1);
+
+            Assert.True(ds.Update(cmptTest));
+        }
+
+        [Fact]
+        [AvantApresDataService(CheminBd)]
+        public void Update_ShouldBeValid()
+        {
+            CompteSqliteDataService ds = new CompteSqliteDataService(CheminBd);
+
+            Compte cmptTest = new Compte(1, "9864", 123.45, 1);
+
+            Assert.True(ds.Update(cmptTest));
+        }
     }
 }
