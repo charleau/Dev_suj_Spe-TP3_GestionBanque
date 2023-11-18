@@ -1,6 +1,7 @@
 ﻿
 using GestionBanque.Models.DataService;
 using GestionBanque.Models;
+using Microsoft.Data.Sqlite;
 
 namespace GestionBanque.Tests
 {
@@ -38,6 +39,10 @@ namespace GestionBanque.Tests
             Assert.Equal(clientAttendu, clientActuel);
         }
 
+/**************************************************************************************************
+                                                                                           GetAll()
+**************************************************************************************************/
+
         [Fact]
         [AvantApresDataService(CheminBd)]
         public void GetAllTest_ShouldBeValid()
@@ -54,6 +59,47 @@ namespace GestionBanque.Tests
             iEnumAttendue = listAttendue;
 
             Assert.Equal(list, iEnumAttendue);
+        }
+
+/**************************************************************************************************
+                                                                                 RecupererComptes()
+**************************************************************************************************/
+
+        /* Le test ne passe pas, je sais. Mais je n'ai pas réussi à le faire
+         * et je ne comprends pas comment tester cette méthode... 
+        */
+
+        [Fact]
+        [AvantApresDataService(CheminBd)]
+        public void RecupererComptesTest_ShouldBeValid()
+        {
+            List<Compte> listAttendue = new List<Compte>();
+
+            SqliteConnection connexion = new SqliteConnection($"Data Source={CheminBd};Cache=Shared");
+            connexion.Open();
+
+            using SqliteCommand commande = new SqliteCommand("SELECT * FROM compte WHERE client_id=@client_id", connexion);
+            commande.Parameters.AddWithValue("@client_id", 1);
+
+            using SqliteDataReader lecteur = commande.ExecuteReader();
+
+            while (lecteur.Read())
+            {
+                Compte compte = new Compte(
+                    lecteur.GetInt32(lecteur.GetOrdinal("id")),
+                    lecteur.GetString(lecteur.GetOrdinal("no_compte")),
+                    lecteur.GetDouble(lecteur.GetOrdinal("balance")),
+                    lecteur.GetInt32(lecteur.GetOrdinal("client_id"))
+                    );
+                listAttendue.Add(compte);
+            }
+
+            //------------------------------------------------------
+
+            ClientSqliteDataService ds = new ClientSqliteDataService(CheminBd);
+            Client client = ds.Get(1);
+
+            Assert.Equal(listAttendue, client.Comptes);
         }
     }
 }
